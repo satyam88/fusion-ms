@@ -6,5 +6,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ccna {
     @GetMapping("/ccna")
-    public String getData() {return  "Welcome to ccna Class" ; }
+    public String getData() {return  "Welcome to ccna Class this class run 30days " ; }
 }
