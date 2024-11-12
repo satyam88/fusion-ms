@@ -12,7 +12,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = "satyam88/fusion-ms"
         ECR_REPO = "533267238276.dkr.ecr.ap-south-1.amazonaws.com/fusion-ms"
-        NEXUS_URL = "3.6.37.208:8085/repository/fusion-ms"
+        NEXUS_URL = "3.111.157.186:8085/repository/fusion-ms"
     }
 
     stages {
