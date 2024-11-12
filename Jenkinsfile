@@ -99,16 +99,13 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'nexus-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                         echo "Logging into Nexus..."
-
-                        // Use HTTP and --password-stdin to securely pass the password
                         sh """
-                            echo \$PASSWORD | docker login http://${NEXUS_URL} -u \$USERNAME --password-stdin
+                            echo \$PASSWORD | docker login ${NEXUS_URL} -u \$USERNAME --password-stdin
                         """
-
                         echo "Pushing Docker Image to Nexus Repository..."
                         sh """
-                            docker tag fusion-ms http://${NEXUS_URL}/fusion-ms:latest
-                            docker push http://${NEXUS_URL}/fusion-ms:latest
+                            docker tag fusion-ms ${NEXUS_URL}:latest
+                            docker push ${NEXUS_URL}:latest
                         """
                         echo "Push to Nexus completed."
                     }
