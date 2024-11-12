@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
 
@@ -13,7 +12,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = "satyam88/fusion-ms"
         ECR_REPO = "533267238276.dkr.ecr.ap-south-1.amazonaws.com/fusion-ms"
-        NEXUS_URL = "http://3.6.37.208:8085/repository/fusion-ms/"
+        NEXUS_URL = "3.6.37.208:8085/repository/fusion-ms"
     }
 
     stages {
@@ -99,11 +98,16 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'nexus-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        sh "docker login ${NEXUS_URL} -u ${USERNAME} -p ${PASSWORD}"
-                        echo "Push Docker Image to Nexus : In Progress"
-                        sh "docker tag fusion-ms ${NEXUS_URL}latest"
-                        sh "docker push ${NEXUS_URL}latest"
-                        echo "Push Docker Image to Nexus : Completed"
+                        echo "Logging into Nexus..."
+                        // Using --password-stdin for secure login
+                        sh "echo ${PASSWORD} | docker login ${NEXUS_URL} -u ${USERNAME} --password-stdin"
+
+                        echo "Pushing Docker Image to Nexus Repository..."
+                        sh """
+                            docker tag fusion-ms ${NEXUS_URL}/fusion-ms:latest
+                            docker push ${NEXUS_URL}/fusion-ms:latest
+                        """
+                        echo "Push to Nexus completed."
                     }
                 }
             }
