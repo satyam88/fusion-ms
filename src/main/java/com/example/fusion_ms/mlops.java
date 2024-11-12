@@ -6,5 +6,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class mlops {
     @GetMapping("/mlops")
-    public String getData() {return  "Welcome to mlops learn aws sagemaker kubeflow mlflow tensorflow  Class" ; }
+    public String getData() {return  "Welcome to mlops Class this class run 30days " ; }
 }
